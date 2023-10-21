@@ -1,7 +1,7 @@
 try:
     import requests
 except ImportError:
-    print("Please install the requests module.")
+    print("please install the requests module.")
     exit()
 import json
 #from pprint import pprint
