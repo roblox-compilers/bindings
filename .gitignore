@@ -1,3 +1,5 @@
 *.pyc
 roblox.py
 test.py
+rbx.py
+test.lua
