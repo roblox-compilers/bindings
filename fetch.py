@@ -37,6 +37,38 @@ ManualMembers = {
     ],
 }
 
+API = {
+    "Instance": {
+        "Members": [
+            {
+                "MemberType": "Function",
+                "Name": "new",
+                "ReturnType": {
+                    "Category": "Class",
+                    "Name": "Instance"
+                },
+                "Parameters": [
+                    {
+                        "Name": "className",
+                        "Type": {
+                            "Category": "Enum",
+                            "Name": "EnumItem"
+                        }
+                    },""" - Roll out with an optional update
+                    {
+                        "Name": "parent",
+                        "Optional": True,
+                        "Type": {
+                            "Category": "Class",
+                            "Name": "Instance"
+                        }
+                    }"""
+                ]
+            },
+        ]
+    },
+}
+
 def render(creator):
     file = creator.FileStart.format(Version=Version) + creator.PreDefined
     
@@ -118,6 +150,9 @@ def render(creator):
     file += creator.End
     return file
 
+def isStatic(class_, member):
+    """ Return whether or not if the member is static. Static is a `.` instead of a `:`. """
+    pass
 ### EXAMPLES ###
 class Python: # Python Example
     Section = """\n#### {Name} ####\n"""
