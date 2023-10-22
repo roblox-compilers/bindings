@@ -138,7 +138,7 @@ game = DataModel()
     ClassEnd = """"""
     
     ### SERVICES ###
-    ServiceSection = """services = {\n"""
+    ServiceSection = """services: Dict[str, Any] = {\n"""
     Service = """\t"{Name}": {{}},\n"""
     ServiceEnd = """}}"""
     
