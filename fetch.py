@@ -256,6 +256,8 @@ global game = DataModel
             
         return Type
     
+Creator = Python # Default
+
 ### MAIN ###
 def main():
     chosen = sys.argv[1]
