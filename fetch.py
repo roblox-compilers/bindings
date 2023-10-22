@@ -3,7 +3,9 @@ try:
 except ImportError:
     print("please install the requests module.")
     exit()
+from calendar import c
 import json, sys
+from re import M
 #from pprint import pprint
 
 url = "https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/roblox/API-Dump.json"
@@ -13,6 +15,27 @@ data = r.json()
 Version = data["Version"]
 Classes = data["Classes"]
 Enums = data["Enums"]
+
+ManualMembers = {
+    "RemoteFunction": [
+        {
+            "MemberType": "Property",
+            "Name": "OnClientInvoke",
+            "ValueType": {
+                "Category": "Class",
+                "Name": "Function"
+            }
+        },
+        {
+            "MemberType": "Property",
+            "Name": "OnServerInvoke",
+            "ValueType": {
+                "Category": "Class",
+                "Name": "Function"
+            }
+        }
+    ],
+}
 
 def render(creator):
     file = creator.FileStart.format(Version=Version) + creator.PreDefined
@@ -43,7 +66,10 @@ def render(creator):
     def getClassMembers(className):
         for i in Classes:
             if i["Name"] == className:
-                return i["Members"]
+                members = i["Members"]
+                if className in ManualMembers:
+                    members += ManualMembers[className]
+                return members
         print("members for class " + className + " not found")
         exit(1)
         
