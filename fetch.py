@@ -6,13 +6,22 @@ except ImportError:
 from calendar import c
 import json, sys
 from re import M
+from datetime import datetime
+
+now = datetime.now()
+formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+
 #from pprint import pprint
 
 url = "https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/roblox/API-Dump.json"
+version_url = "https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/roblox/version.txt"
+version_guidurl = "https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/roblox/version-guid.txt"
 r = requests.get(url)
+version = requests.get(version_url)
+version_guid = requests.get(version_guidurl)
 data = r.json()
 
-Version = data["Version"]
+Version = str(data["Version"]) + " - " + version.text + " (" + version_guid.text + ")" + " | " + "Generated: " + formatted_now + ", using generator v1.1"
 Classes = data["Classes"]
 Enums = data["Enums"]
 
@@ -129,7 +138,10 @@ def render(creator):
                         if i != len(member["Parameters"]):
                             args += ", "
                         args += creator.ArgFormat.format(Name=creator.fixKeyword(arg["Name"]), Type=creator.typeCompiler(arg["Type"]["Name"], classCache))
-                    file += creator.ClassFunction.format(Name=member["Name"], Args=args, ReturnType=creator.typeCompiler(member["ReturnType"]["Name"], classCache))
+                    if type(member["ReturnType"]) == list:
+                        file += creator.ClassFunction.format(Name=member["Name"], Args=args, ReturnType=creator.typeCompiler(member["ReturnType"][0]["Name"], classCache)) # TODO: Support multiple return values
+                    else:
+                        file += creator.ClassFunction.format(Name=member["Name"], Args=args, ReturnType=creator.typeCompiler(member["ReturnType"]["Name"], classCache))
                 elif member["MemberType"] == "Event":
                     file += creator.ClassEvent.format(Name=member["Name"])
                         
