@@ -402,8 +402,6 @@ pub static GAME: DataModel = DataModel;
             Type = "i64"
         elif Type == "double":
             Type = "f64"
-        elif Type == "bool":
-            Type = "bool"
         elif Type == "number":
             Type = "f64"
         elif Type == "Array":
