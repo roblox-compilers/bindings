@@ -5,3 +5,6 @@ rbx.py
 test.lua
 roblox.tl
 template
+node_modules
+pnpm-lock.yaml
+package-lock.json
